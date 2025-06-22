@@ -137,13 +137,9 @@ const togglePassword = () => {
         class="hidden lg:flex w-1/2 items-center justify-center bg-gradient-to-br from-blue-500 to-teal-400 text-white p-10"
       >
         <div class="max-w-xs text-center space-y-6">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-            class="w-24 h-24 mx-auto"
-            alt="login image"
-          />
+          <img src="/tiketin.png" class="w-25 h-24 mx-auto" alt="login image" />
           <h3 class="text-2xl font-semibold">
-            "Attention is the new currency"
+            "Solusi Pengaduan dan Pengelolaan Tiket"
           </h3>
         </div>
       </div>
