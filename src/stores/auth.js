@@ -41,12 +41,13 @@ export const useAuthStore = defineStore("auth", {
         const response = await axiosInstance.post("/login", credentials);
 
         const token = response.data.data.token;
+        const user = response.data.data.user;
 
         Cookies.set("token", token);
 
         this.success = response.data.message;
 
-        if (response.data.data.user.role === "admin") {
+        if (user.role === "admin") {
           router.push({ name: "admin.dashboard" });
         } else {
           router.push({ name: "app.dashboard" });
@@ -70,11 +71,14 @@ export const useAuthStore = defineStore("auth", {
 
       try {
         const response = await axiosInstance.post("/register", credentials);
-        this.success = response.data.message;
 
         const token = response.data.data.token;
+        const user = response.data.data.user;
 
         Cookies.set("token", token);
+        this.user = user;
+
+        this.success = response.data.message;
 
         router.push({ name: "app.dashboard" });
       } catch (error) {
@@ -117,6 +121,17 @@ export const useAuthStore = defineStore("auth", {
       // 2. Make API call to get user data
       // 3. Update user state
       // 4. Handle unauthorized error
+      this.loading = true;
+      try {
+        const response = await axiosInstance.get("/me");
+        this.user = response.data.data;
+      } catch (error) {
+        this.user = null;
+        Cookies.remove("token");
+        this.error = handleError(error);
+      } finally {
+        this.loading = false;
+      }
     },
   },
 });
